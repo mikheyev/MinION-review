@@ -1,0 +1,16 @@
+Package: BSgenome.lambda
+Title: Full genome sequences for lambda phage 
+Description: Full genome sequences for lambda phage NC_001416
+Version: 1.0
+organism: lambda phage
+species: lambda
+provider: NEB
+provider_version: 1
+release_date: Mar. 2011
+release_name: lambda
+source_url: http://www.ncbi.nlm.nih.gov/nuccore/NC_001416
+organism_biocview: lambda
+BSgenomeObjname: lambda
+seqnames: c("NC_001416")
+circ_seqs: "http://www.ncbi.nlm.nih.gov/nuccore/NC_001416"
+seqs_srcdir: /Volumes/genefs/MikheyevU/sasha/projects/lambda/ref

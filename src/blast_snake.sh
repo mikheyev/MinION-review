@@ -11,5 +11,5 @@ a=(../data/snake/?d.fasta) #2
 f=${a["SGE_TASK_ID"-1]}
 base=`basename $f .fasta`
 
-blastn -gapopen 2 -gapextend 2 -word_size 15  -max_target_seqs 1 -num_threads 12 -db ../ref/protobothrops -query $f -outfmt 6 -out ../data/snake/align/$base.txt
+blastn -evalue 1e-3 -gapopen 2 -gapextend 2 -word_size 15  -max_target_seqs 1 -num_threads 12 -db ../ref/Pf -query $f -outfmt 6 -out ../data/snake/align/$base.txt
 

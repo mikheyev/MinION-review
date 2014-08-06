@@ -1,0 +1,70 @@
+An evaluation of Oxford Nanopore's MinION platform
+========================================================
+```{r, echo=FALSE}
+setwd("/Volumes/genefs/MikheyevU/sasha/projects/lambda/src")  # Change this to your src directory!
+```
+
+```{r, message=FALSE}
+library(ggbio)
+library(GenomicRanges)
+library(GenomicAlignments)
+library(biovizBase)
+library(seqinr)
+```
+
+## Summary statistics for aligned lambda reads
+```{r read_data, cache=TRUE}
+param <- ScanBamParam(what=c("cigar"),tag=("NM"))
+bam1 <- readGAlignments("../data/lambda/align/1d.bam", param=param)
+bam2 <- readGAlignments("../data/lambda/align/2d.bam", param=param)
+cigar.matrix1 <- cigarOpTable(bam1@cigar)
+values(bam1)$indels<-rowSums(cigar.matrix1[,2:3])/rowSums(cigar.matrix1[,1:3])
+values(bam1)$identity <- (cigar.matrix1[,1]-values(bam1)$NM)/qwidth(bam1)
+sum(cigar.matrix1[,1]) #mapped bases
+mean(cigar.matrix1[,1]) #average mapped read length
+sum(cigar.matrix1[,5]) #soft clipped bases
+mean((cigar.matrix1[,1]-values(bam1)$NM)/qwidth(bam1)) # mean identity
+mean(rowSums(cigar.matrix1[,2:3])/rowSums(cigar.matrix1[,1:3])) # mean indels
+cigar.matrix2 <- cigarOpTable(bam2@cigar)
+values(bam2)$indels<-rowSums(cigar.matrix2[,2:3])/rowSums(cigar.matrix2[,1:3])
+values(bam2)$identity<-(cigar.matrix2[,1]-values(bam2)$NM)/qwidth(bam2)
+sum(cigar.matrix2[,1]) #mapped bases
+mean(cigar.matrix2[,1]) #average mapped read length
+sum(cigar.matrix2[,5]) #soft clipped bases
+mean(cigar.matrix2[,5]/sum(cigar.matrix2[,5])) #soft clipped %
+mean(rowSums(cigar.matrix2[,2:3])/rowSums(cigar.matrix2[,1:3])) # mean indels
+mean((cigar.matrix2[,1]-values(bam2)$NM)/qwidth(bam2)) #mean identity
+ggplot(data.frame(mismatch=(cigar.matrix2[,1]-values(bam2)$NM)/rowSums(cigar.matrix2)))+geom_histogram(aes(x=mismatch)) +scale_x_log10() #mean mismatches for aligned sections of reads
+ggplot(data.frame(mismatch=(cigar.matrix1[,1]-values(bam1)$NM)/rowSums(cigar.matrix1)))+geom_histogram(aes(x=mismatch)) +scale_x_log10() #mean mismatches for aligned sections of reads
+
+bam1 <-as(bam1, "GRanges")
+bam2 <-as(bam2, "GRanges")
+p1 <- autoplot(bam1,geom="rect",aes(color=factor(1),alpha=0))+theme_bw()+scale_color_manual(values=c("white"))+guides(colour=FALSE,alpha=FALSE)
+autoplot(bam2,geom="rect",aes(color=factor(1),alpha=0,fill=identity))+theme_bw()+scale_color_manual(values=c("white"))+guides(colour=FALSE,alpha=FALSE)+scale_fill_gradient(low="grey", high="blue")+theme(legend.justification=c(0,0), legend.position=c(0,.4))
+```
+
+## Read length distribution in 2D data from lambda phage
+
+```{r fragment_distribution, cache=TRUE}
+len <- read.csv("../data/processed/lengths.csv",header=T)
+ggplot(len,aes(x=len,fill=workflow))+geom_histogram(binwidth=100,alpha=.5)+xlim(0,15000)+theme_bw()+scale_fill_manual(values=c("red","steelblue"))+geom_vline(xintercept=6800)
+#ggsave("../plots/readlength.pdf")
+
+```
+
+## Examine GC content of the reads and compare it to the reference
+```{r GC_content,cache=TRUE}
+lambda_ref <- read.fasta(file = "../ref/NC_001416.fa")
+lambda <- read.fasta(file = "../data/lambda/2d.fasta")
+snake_ref <- read.fasta(file = "../ref/protobothrops_ref.fasta")
+snake_ref_gc <- mean(sapply(snake_ref,GC))
+snake <- read.fasta(file = "../data/snake/1d.fasta")
+dat <- data.frame(gc = c(sapply(snake,GC),sapply(lambda,GC)),library = c(rep("snake",length(snake)),rep("lambda",length(lambda))))
+ggplot(dat,aes(x=gc,fill=library))+geom_histogram(binwidth=0.001,alpha=.5)+xlim(0.35,.6)+theme_bw()+scale_fill_manual(values=c("red","steelblue"))+geom_vline(xintercept=GC(lambda_ref[[1]]),color="red")+geom_vline(xintercept=snake_ref_gc,color="steelblue")+annotate("text",x=GC(lambda_ref[[1]])+.02,y=310,label="lambda GC")+annotate("text",x=snake_ref_gc+.025,y=310,label="snake assembly GC")
+```
+
+## Read length summary statistics
+```{r summary_statistics}
+summary(sapply(lambda,length))
+summary(sapply(snake,length))
+```
