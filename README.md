@@ -12,7 +12,7 @@ For review, data the compressed data folder is located located [here](https://dl
 	44G    data/lambda/reads	# basecalled data from MinION (*.fast5) and fastq files
 	279M   data/lambda/blast	# blast vs NCBI nr .xml results
 	2.7G   data/snake			# files associated with the *Protobothrops flavoviridis* venom gland transcriptome
-	1.9G   data/snake/illumina	# trimmed GAII reads from (Aird et al. 2013)[http://www.biomedcentral.com/1471-2164/14/790]
+	1.9G   data/snake/illumina	# trimmed GAII reads from Aird et al. (2013)
 	759M   data/snake/raw		# basecalled data from MinION (*.fast5) and fastq files
 	37M    data/snake/blast		# blast vs NCBI nr .xml results
 	27M    data/snake/aligned 	# aligned reads for snake transcriptome
