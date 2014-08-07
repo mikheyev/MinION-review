@@ -17,7 +17,7 @@ For review, data the compressed data folder is located located [here](https://dl
 	37M    data/snake/blast		# blast vs NCBI nr .xml results
 	27M    data/snake/aligned 	# aligned reads for snake transcriptome
 
-Unless you are interested in the very low-level data, you can probably exclude data/*/*/*.fast5 and data/snake/illumina, which take up almost all the space in the archive:
+Unless you are interested in the very low-level data, you can probably exclude `data/*/*/*.fast5*` and `data/snake/illumina`, which take up almost all the space in the archive:
 
 	tar --exclude=*.fast5* --exclude=illumina -tzf minion_data.tar.gz
 
