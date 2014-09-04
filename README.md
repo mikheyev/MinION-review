@@ -3,7 +3,7 @@
 ## Citaton: Mikheyev, A.S. and Tin, M.M.Y., A first look at the Oxford Nanopore MinION sequencer, *Molecular Ecology Resources*, *in press*.
 	
 - [Publisher's web site](http://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12324/abstract)
-- [Manuscript PDF](men12324.pdf)
+- [Manuscript PDF](https://github.com/mikheyev/MinION-review/raw/master/men12324.pdf)
 
 ## Data
 
