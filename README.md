@@ -1,8 +1,13 @@
-# [Evaluating the performace of Oxford Nanopore's MinION](http://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12324/abstract)
+# Evaluating the performace of Oxford Nanopore's MinION
+
+## Citaton: Mikheyev, A.S. and Tin, M.M.Y., A first look at the Oxford Nanopore MinION sequencer, *Molecular Ecology Resources*, *in press*.
+	
+- [Publisher's web site](http://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12324/abstract)
+- [Manuscript PDF](men12324.pdf)
 
 ## Data
 
-The complete contents of the data folder will eventually be found on the [Dryad Digital Repository](http://dx.doi.org/10.5061/dryad.5p0c3) as doi:10.5061/dryad.5p0c3
+The complete contents of the data folder will eventually be found on the [Dryad Digital Repository]
 
 Currently the data folder includes the raw data in FASTQ format. If you need any other files, please contact the authors.
 
